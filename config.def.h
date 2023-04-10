@@ -1,10 +1,9 @@
 /* See LICENSE file for copyright and license details. */
 
 /* Constants */
-#define TERMINAL "kitty"
-#define TERMCLASS "kitty"
+#define TERMINAL "st"
+#define TERMCLASS "St"
 #define BROWSER "librewolf"
-
 
 //
 // set $rosewater #f2d5cf
@@ -42,6 +41,16 @@
 // static char selbordercolor[]        = "#4c566a";
 // static char selbgcolor[]            = "#4c566a";
 
+// static const char col1[]            = "#cad3f5";
+// static const char col2[]            = "#1e2030";
+// static const char col3[]            = "#c6a0f6";
+// static const char col4[]            = "#363a4f";
+// static const char *colors[][3]      = {
+// 	/*               fg         bg         border   */
+// 	[SchemeNorm] = { col1,      col2,      col4 },
+// 	[SchemeSel]  = { col3,      col4,      col3  },
+// };
+
 /* appearance */
 static unsigned int borderpx  = 2;        /* border pixel of windows */
 static unsigned int snap      = 32;       /* snap pixel */
@@ -56,7 +65,7 @@ static int topbar             = 1;        /* 0 means bottom bar */
 static char font[]            = "monospace:size=10";
 static char dmenufont[]       = "JetBrains Mono:size=12";
 // static const char *fonts[]          = { font };
-static const char *fonts[]          = { "monospace:size=10"  };
+static const char *fonts[]          = { "monospace:size=10", "Symbols Nerd Font Mono:pixelsize=10:antialias=true:autohint=true" };
 
 static char normbgcolor[]           = "#292c3c";
 static char normbordercolor[]       = "#292c3c";
@@ -75,7 +84,10 @@ typedef struct {
   const void *cmd;
 } Sp;
 
-const char *spcmd1[] = {"st", "-n", "spterm", "-g", "120x34", NULL };
+// For kitty terminal:
+// const char *spcmd1[] = {TERMINAL, "--name", "spterm", "-o", "remember_window_size=no", "-o", "initial_window_width=120c", "-o", "initial_window_height=34c", NULL };
+// const char *spcmd2[] = {TERMINAL, "--name", "spcalc", "-o", "initial_window_width=50c", "-o", "initial_window_height=20c" , "-e", "bc", "-lq", NULL };
+const char *spcmd1[] = {TERMINAL, "-n", "spterm", "-g", "120x34", NULL };
 const char *spcmd2[] = {TERMINAL, "-n", "spcalc", "-f", "monospace:size=16", "-g", "50x20", "-e", "bc", "-lq", NULL };
 const char *spcmd3[] = {TERMINAL, "-n", "spfm", "-g", "144x41", "-e", "ranger", NULL };
 const char *spcmd4[] = {"keepassxc", NULL };
@@ -101,7 +113,7 @@ static const Rule rules[] = {
   { "Firefox", NULL,        NULL,           1 << 8,    0,          0,          -1,        -1 },
   { TERMCLASS, NULL,        NULL,           0,         0,          1,           0,        -1 },
   { NULL,      NULL,        "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
-  { "St", "spterm",    NULL,           SPTAG(0),  1,          1,           0,        -1 },
+  { TERMCLASS, "spterm",    NULL,           SPTAG(0),  1,          1,           0,        -1 },
   { TERMCLASS, "spcalc",    NULL,           SPTAG(1),  1,          1,           0,        -1 },
   /* { TERMCLASS, "spfm",      NULL,           SPTAG(1),  1,          1,           0,        -1 }, */
   /* { TERMCLASS, "keepassxc", NULL,           SPTAG(2),  0,          1,           0,        -1 }, */
