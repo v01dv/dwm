@@ -10,7 +10,7 @@ sudo make clean install
 
 I keep a readme in `dwm.pdf` for my whole system, including the binds here.
 Press `super+F1` to view it in dwm (zathura is required for that binding).
-I haven't kept `man dwm`/`dwm.1` updated though. 
+I haven't kept `man dwm`/`dwm.1` updated though.
 
 ## Patches and features
 
@@ -45,7 +45,10 @@ Extra stuff added to vanilla dwm (version 6.4) into order of the applied patches
     - https://specifications.freedesktop.org/wm-spec/latest/
     - https://specifications.freedesktop.org/wm-spec/1.5/ar01s03.html
     - https://www.reddit.com/r/suckless/comments/k8lej4/dwm_i_am_looking_for_patches_to_make_dwm_more/
-
+- [ ]   [focusonnetactive](https://dwm.suckless.org/patches/focusonnetactive/)
+        This patch allows to use `rofi -show window` to get a select able list
+        of open windows and switch to the window, and activate the tag.
+        Found this at [[DWM] Best Way to Find Out What Apps Left Open on the Tags : r/suckless](https://www.reddit.com/r/suckless/comments/198rxnk/dwm_best_way_to_find_out_what_apps_left_open_on/)
 ## Credits
 
 - [LukeSmithxyz](https://github.com/LukeSmithxyz/dwm)
