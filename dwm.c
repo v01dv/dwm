@@ -60,7 +60,6 @@
                                * MAX(0, MIN((y)+(h),(m)->wy+(m)->wh) - MAX((y),(m)->wy)))
 #define ISINC(X)                ((X) > 1000 && (X) < 3000)
 #define PREVSEL                 3000
-#define LENGTH(X)               (sizeof X / sizeof X[0])
 #define MOD(N,M)                ((N)%(M) < 0 ? (N)%(M) + (M) : (N)%(M))
 #define ISVISIBLE(C)            ((C->tags & C->mon->tagset[C->mon->seltags]) || C->issticky)
 #define MOUSEMASK               (BUTTONMASK|PointerMotionMask)
@@ -2038,6 +2037,9 @@ togglesticky(const Arg *arg)
 		return;
     setsticky(selmon->sel, !selmon->sel->issticky);
 	arrange(selmon);
+}
+
+void
 togglescratch(const Arg *arg)
 {
 	Client *c;
@@ -2061,6 +2063,9 @@ togglescratch(const Arg *arg)
 		selmon->tagset[selmon->seltags] |= scratchtag;
 		spawn(&sparg);
 	}
+}
+
+void
 togglefullscr(const Arg *arg)
 {
   if(selmon->sel)
@@ -2409,7 +2414,9 @@ updatestatus(void)
 		statusw += TEXTW(text) - lrpad + 2;
 
 	}
-	drawbar(selmon);
+   for(m = mons; m; m = m->next)
+   drawbar(m);
+	// drawbar(selmon);
 }
 
 void
