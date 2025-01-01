@@ -30,6 +30,7 @@ Extra stuff added to vanilla dwm (version 6.4) into order of the applied patches
 10. [dwm-hide_vacant_tags-6.3](https://dwm.suckless.org/patches/hide_vacant_tags/dwm-hide_vacant_tags-6.3.diff): hides tags with no windows.
 11. [dwm-statuscmd-20210405-67d76bd](https://dwm.suckless.org/patches/statuscmd/dwm-statuscmd-20210405-67d76bd.diff): with my build of [dwmblocks](https://github.com/v01dv/dwmblocks).
 12. [dwm-xresources-20210827-138b405](https://dwm.suckless.org/patches/xresources/dwm-xresources-20210827-138b405.diff): reads colors/variables.
+13. [dwm-fixborders-6.2](https://dwm.suckless.org/patches/alpha/dwm-fixborders-6.2.diff): make windows' borders opaque
 
 ## TODO
 
