@@ -5,73 +5,25 @@
 #define TERMCLASS "St"
 #define BROWSER "librewolf"
 
-//
-// set $rosewater #f2d5cf
-// set $flamingo  #eebebe
-// set $pink      #f4b8e4
-// set $mauve     #ca9ee6
-// set $red       #e78284
-// set $maroon    #ea999c
-// set $peach     #ef9f76
-// set $green     #a6d189
-// set $teal      #81c8be
-// set $sky       #99d1db
-// set $sapphire  #85c1dc
-// set $blue      #8caaee
-// set $lavender  #babbf1
-// set $text      #c6d0f5
-// set $subtext1  #b5bfe2
-// set $subtext0  #a5adce
-// set $overlay2  #949cbb
-// set $overlay1  #838ba7
-// set $overlay0  #737994
-// set $surface2  #626880
-// set $surface1  #51576d
-// set $surface0  #414559
-// set $base      #303446
-// set $mantle    #292c3c
-// set $crust     #232634
-
-//
-// Nord colors
-// static char normbgcolor[]           = "#2e3440";
-// static char normbordercolor[]       = "#2e3440";
-// static char normfgcolor[]           = "#81a1c1";
-// static char selfgcolor[]            = "#e5e9f0";
-// static char selbordercolor[]        = "#4c566a";
-// static char selbgcolor[]            = "#4c566a";
-
-// static const char col1[]            = "#cad3f5";
-// static const char col2[]            = "#1e2030";
-// static const char col3[]            = "#c6a0f6";
-// static const char col4[]            = "#363a4f";
-// static const char *colors[][3]      = {
-// 	/*               fg         bg         border   */
-// 	[SchemeNorm] = { col1,      col2,      col4 },
-// 	[SchemeSel]  = { col3,      col4,      col3  },
-// };
-
 /* appearance */
-static unsigned int borderpx  = 2;        /* border pixel of windows */
-static unsigned int snap      = 32;       /* snap pixel */
+static unsigned int borderpx        = 2;        /* border pixel of windows */
+static unsigned int snap            = 32;       /* snap pixel */
 static const unsigned int gappih    = 10;       /* horiz inner gap between windows */
 static const unsigned int gappiv    = 10;       /* vert inner gap between windows */
 static const unsigned int gappoh    = 10;       /* horiz outer gap between windows and screen edge */
 static const unsigned int gappov    = 10;       /* vert outer gap between windows and screen edge */
 static       int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
-static int showbar            = 1;        /* 0 means no bar */
-static int topbar             = 1;        /* 0 means bottom bar */
-static char font[]            = "monospace:size=10";
-static char dmenufont[]       = "JetBrains Mono:size=12";
-// static const char *fonts[]          = { font };
+static int showbar                  = 1;        /* 0 means no bar */
+static int topbar                   = 1;        /* 0 means bottom bar */
+static char font[]                  = "monospace:size=10";
 static const char *fonts[]          = { "monospace:size=10", "Symbols Nerd Font Mono:pixelsize=10:antialias=true:autohint=true" };
-
+static char dmenufont[]             = "JetBrains Mono:size=12";
 static char normbgcolor[]           = "#292c3c";
-static char normbordercolor[]       = "#292c3c";
+static char normbordercolor[]       = "#303446";
 static char normfgcolor[]           = "#a5adce";
 static char selfgcolor[]            = "#303446";
-static char selbordercolor[]        = "#f4b8e4";
+static char selbordercolor[]        = "#8caaee";
 static char selbgcolor[]            = "#8caaee";
 static char *colors[][3] = {
        /*               fg           bg           border   */
@@ -80,8 +32,8 @@ static char *colors[][3] = {
 };
 
 typedef struct {
-  const char *name;
-  const void *cmd;
+	const char *name;
+	const void *cmd;
 } Sp;
 
 // For kitty terminal:
@@ -97,12 +49,14 @@ static Sp scratchpads[] = {
   {"spcalc",      spcmd2},
   {"spranger",    spcmd3},
   {"keepassxc",   spcmd4},
+
 };
 
 /* tagging */
 // static const char *tags[] = {"", "", "", "", "", "", "", "", ""};
 // static const char *tags[] = { "  ", "  ", "  ", "  " , "  ", "  ", "  ", "  ", "  " };
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+// Look at https://www.reddit.com/r/suckless/comments/jsu2lw/dwm_window_switcher_ewmhtags/
+static char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 static const Rule rules[] = {
   /* xprop(1):
    *  WM_CLASS(STRING) = instance, class
@@ -196,6 +150,7 @@ ResourcePref resources[] = {
   { "mfact",              FLOAT,   &mfact },
 };
 
+
 static const Key keys[] = {
   /* modifier                     key        function        argument */
   STACKKEYS(MODKEY,                          focus)
@@ -203,13 +158,13 @@ static const Key keys[] = {
 
   { MODKEY,                       XK_0,      view,           {.ui = ~0 } },
   { MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
-  
+
   { MODKEY,                       XK_Return, spawn,          {.v = termcmd } },   /* Spawn terminal */
   { MODKEY,                       XK_q,      killclient,     {0} },               /* Close window */
   // { MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
   { MODKEY,                       XK_d,      spawn,          {.v = (const char*[]){ "dmenu_run", NULL } } },
   { MODKEY,                       XK_b,      togglebar,      {0} },               /* Toggle status bar (may also middle click on desctop) */
- 
+
   // WINDOW LAYOUTS
   { MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} }, /* tile */
   { MODKEY|ShiftMask,             XK_t,      setlayout,      {.v = &layouts[5]} }, /* bstack */
@@ -330,7 +285,7 @@ static const Key keys[] = {
   // { MODKEY,                     XK_F12,   spawn,    SHCMD("remaps") },
 
 
-  // 
+  //
   // BASIC PROGRAMS
   //
   { MODKEY,             XK_w,   spawn,    {.v = (const char*[]){ BROWSER, NULL } } },
@@ -346,7 +301,7 @@ static const Key keys[] = {
   { MODKEY,             XK_apostrophe,    togglescratch,  {.ui = 1} },
 
   //
-  //  XF86Keys 
+  //  XF86Keys
   //
   { 0, XF86XK_AudioMute,          spawn,    SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle; kill -44 $(pidof dwmblocks)") },
   { 0, XF86XK_AudioRaiseVolume,   spawn,    SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%+; kill -44 $(pidof dwmblocks)") },
