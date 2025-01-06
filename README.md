@@ -14,7 +14,7 @@ I haven't kept `man dwm`/`dwm.1` updated though.
 
 ## Patches and features
 
-Extra stuff added to vanilla dwm (version 6.4) into order of the applied patches:
+Extra stuff added to vanilla dwm (version 6.5) into order of the applied patches:
 
 1. [dwm-vanitygaps-6.2](https://dwm.suckless.org/patches/vanitygaps/dwm-vanitygaps-6.2.diff): gaps allowed across all layouts.
     - Added layouts: tile, bstack, bstackhoriz, centeredmaster, centeredfloatingmaster, deck, fibonacci (dwindle, spiral), grid, nrowgrid.
@@ -31,6 +31,13 @@ Extra stuff added to vanilla dwm (version 6.4) into order of the applied patches
 11. [dwm-statuscmd-20210405-67d76bd](https://dwm.suckless.org/patches/statuscmd/dwm-statuscmd-20210405-67d76bd.diff): with my build of [dwmblocks](https://github.com/v01dv/dwmblocks).
 12. [dwm-xresources-20210827-138b405](https://dwm.suckless.org/patches/xresources/dwm-xresources-20210827-138b405.diff): reads colors/variables.
 13. [dwm-fixborders-6.2](https://dwm.suckless.org/patches/alpha/dwm-fixborders-6.2.diff): make windows' borders opaque
+14. [windowmap](https://dwm.suckless.org/patches/windowmap/): remove moving window [to the left](https://www.reddit.com/r/suckless/comments/190uyxe/dwm_tag_picom_animations/) when changing tags.
+    This allow to correct work of the trigger "hide" in picom animation configuration.
+    Trigger "hide" doesn't work for DWM, because here no [iconic state minimized](https://www.reddit.com/r/suckless/comments/kie83p/minimise_windows_in_dwm/).
+    We achieve a similar effect by sending a window to another tag that is
+    not currently being viewed. This way, the window is still running but
+    is not visible on your current workspace. So window are merely moved in and
+    out of view. The same behavior occurs when changing tags.
 
 ## TODO
 
@@ -50,6 +57,7 @@ Extra stuff added to vanilla dwm (version 6.4) into order of the applied patches
         This patch allows to use `rofi -show window` to get a select able list
         of open windows and switch to the window, and activate the tag.
         Found this at [[DWM] Best Way to Find Out What Apps Left Open on the Tags : r/suckless](https://www.reddit.com/r/suckless/comments/198rxnk/dwm_best_way_to_find_out_what_apps_left_open_on/)
+
 ## Credits
 
 - [LukeSmithxyz](https://github.com/LukeSmithxyz/dwm)
