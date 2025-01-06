@@ -1,8 +1,8 @@
 /* See LICENSE file for copyright and license details. */
 
 /* Constants */
-#define TERMINAL "st"
-#define TERMCLASS "St"
+#define TERMINAL "ghostty"
+#define TERMCLASS "com.mitchellh.ghostty"
 #define BROWSER "librewolf"
 
 /* appearance */
@@ -39,10 +39,16 @@ typedef struct {
 // For kitty terminal:
 // const char *spcmd1[] = {TERMINAL, "--name", "spterm", "-o", "remember_window_size=no", "-o", "initial_window_width=120c", "-o", "initial_window_height=34c", NULL };
 // const char *spcmd2[] = {TERMINAL, "--name", "spcalc", "-o", "initial_window_width=50c", "-o", "initial_window_height=20c" , "-e", "bc", "-lq", NULL };
-const char *spcmd1[] = {TERMINAL, "-n", "spterm", "-g", "120x34", NULL };
-const char *spcmd2[] = {TERMINAL, "-n", "spcalc", "-f", "monospace:size=16", "-g", "50x20", "-e", "bc", "-lq", NULL };
-const char *spcmd3[] = {TERMINAL, "-n", "spfm", "-g", "144x41", "-e", "ranger", NULL };
-const char *spcmd4[] = {"keepassxc", NULL };
+
+// For st terminal:
+// const char *spcmd1[] = {TERMINAL, "-n", "spterm", "-g", "120x34", NULL };
+// const char *spcmd2[] = {TERMINAL, "-n", "spcalc", "-f", "monospace:size=16", "-g", "50x20", "-e", "bc", "-lq", NULL };
+// const char *spcmd3[] = {TERMINAL, "-n", "spfm", "-g", "144x41", "-e", "ranger", NULL };
+// const char *spcmd4[] = {"keepassxc", NULL };
+
+// For ghostty terminal:
+const char *spcmd1[] = {TERMINAL, "--x11-instance-name=spterm", "--class=my.scratchpad", "--window-width=120", "--window-height=34", "--window-save-state=never", "--gtk-single-instance=false", NULL };
+const char *spcmd2[] = {TERMINAL, "--x11-instance-name=spcalc", "--class=my.scratchpad", "--window-width=50", "--window-height=20", "--window-save-state=never", "--gtk-single-instance=false", "--font-size=16", "-e", "bc -lq", NULL };
 static Sp scratchpads[] = {
   /* name          cmd  */
   {"spterm",      spcmd1},
@@ -67,8 +73,8 @@ static const Rule rules[] = {
   { "Firefox", NULL,        NULL,           1 << 8,    0,          0,          -1,        -1 },
   { TERMCLASS, NULL,        NULL,           0,         0,          1,           0,        -1 },
   { NULL,      NULL,        "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
-  { TERMCLASS, "spterm",    NULL,           SPTAG(0),  1,          1,           0,        -1 },
-  { TERMCLASS, "spcalc",    NULL,           SPTAG(1),  1,          1,           0,        -1 },
+  { NULL,      "spterm",    NULL,           SPTAG(0),  1,          1,           0,        -1 },
+  { NULL,      "spcalc",    NULL,           SPTAG(1),  1,          1,           0,        -1 },
   /* { TERMCLASS, "spfm",      NULL,           SPTAG(1),  1,          1,           0,        -1 }, */
   /* { TERMCLASS, "keepassxc", NULL,           SPTAG(2),  0,          1,           0,        -1 }, */
 };
