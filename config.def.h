@@ -47,14 +47,15 @@ typedef struct {
 // const char *spcmd4[] = {"keepassxc", NULL };
 
 // For ghostty terminal:
+// Follow GTK requirements (https://docs.gtk.org/gio/type_func.Application.id_is_valid.html) for --class name.
 const char *spcmd1[] = {TERMINAL, "--x11-instance-name=spterm", "--class=my.scratchpad", "--window-width=120", "--window-height=34", "--window-save-state=never", "--gtk-single-instance=false", NULL };
 const char *spcmd2[] = {TERMINAL, "--x11-instance-name=spcalc", "--class=my.scratchpad", "--window-width=50", "--window-height=20", "--window-save-state=never", "--gtk-single-instance=false", "--font-size=16", "-e", "bc -lq", NULL };
 static Sp scratchpads[] = {
   /* name          cmd  */
   {"spterm",      spcmd1},
   {"spcalc",      spcmd2},
-  {"spranger",    spcmd3},
-  {"keepassxc",   spcmd4},
+  // {"spranger",    spcmd3},
+  // {"keepassxc",   spcmd4},
 
 };
 
