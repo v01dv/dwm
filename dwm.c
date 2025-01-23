@@ -1907,6 +1907,7 @@ togglesticky(const Arg *arg)
 		return;
 	setsticky(selmon->sel, !selmon->sel->issticky);
 	arrange(selmon);
+}
 
 void
 togglescratch(const Arg *arg)
@@ -1932,6 +1933,7 @@ togglescratch(const Arg *arg)
 		selmon->tagset[selmon->seltags] |= scratchtag;
 		spawn(&sparg);
 	}
+}
 
 void
 toggletag(const Arg *arg)
