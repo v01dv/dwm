@@ -1,12 +1,19 @@
 /* See LICENSE file for copyright and license details. */
 
+/* Constants */
+// #define TERMINAL "st"
+// #define TERMCLASS "St"
+#define TERMINAL "ghostty"
+#define TERMCLASS "com.mitchellh.ghostty"
+#define BROWSER "librewolf"
+
 /* appearance */
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
-static const unsigned int gappih    = 20;       /* horiz inner gap between windows */
+static const unsigned int gappih    = 10;       /* horiz inner gap between windows */
 static const unsigned int gappiv    = 10;       /* vert inner gap between windows */
 static const unsigned int gappoh    = 10;       /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov    = 30;       /* vert outer gap between windows and screen edge */
+static const unsigned int gappov    = 10;       /* vert outer gap between windows and screen edge */
 static       int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const int showbar            = 1;        /* 0 means no bar */
@@ -28,14 +35,28 @@ typedef struct {
 	const char *name;
 	const void *cmd;
 } Sp;
-const char *spcmd1[] = {"st", "-n", "spterm", "-g", "120x34", NULL };
-const char *spcmd2[] = {"st", "-n", "spfm", "-g", "144x41", "-e", "ranger", NULL };
-const char *spcmd3[] = {"keepassxc", NULL };
+
+  // For ghostty terminal:
+  // Follow GTK requirements (https://docs.gtk.org/gio/type_func.Application.id_is_valid.html) for --class name.
+  const char *spcmd1[] = {TERMINAL, "--x11-instance-name=spterm", "--class=my.scratchpad", "--window-width=120", "--window-height=34", "--gtk-single-instance=false", NULL };
+  const char *spcmd2[] = {TERMINAL, "--x11-instance-name=spcalc", "--class=my.scratchpad", "--window-width=50", "--window-height=20",  "--gtk-single-instance=false", "--font-size=17", "-e", "bc -lq", NULL };
+
+  // For kitty terminal:
+  // const char *spcmd1[] = {TERMINAL, "--name", "spterm", "-o", "remember_window_size=no", "-o", "initial_window_width=120c", "-o", "initial_window_height=34c", NULL };
+  // const char *spcmd2[] = {TERMINAL, "--name", "spcalc", "-o", "initial_window_width=50c", "-o", "initial_window_height=20c" , "-e", "bc", "-lq", NULL };
+
+  // For st terminal:
+  // const char *spcmd1[] = {TERMINAL, "-n", "spterm", "-g", "120x34", NULL };
+  // const char *spcmd2[] = {TERMINAL, "-n", "spcalc", "-f", "monospace:size=16", "-g", "50x20", "-e", "bc", "-lq", NULL };
+  // const char *spcmd3[] = {TERMINAL, "-n", "spfm", "-g", "144x41", "-e", "ranger", NULL };
+  // const char *spcmd4[] = {"keepassxc", NULL };
+
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"spterm",      spcmd1},
 	{"spranger",    spcmd2},
-	{"keepassxc",   spcmd3},
+	//  {"spranger",    spcmd3},
+	// {"keepassxc",   spcmd4},
 };
 
 /* tagging */
@@ -45,12 +66,15 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",	  NULL,			NULL,		0,				1,			 -1 },
-	{ "Firefox",  NULL,			NULL,		1 << 8,			0,			 -1 },
-	{ NULL,		  "spterm",		NULL,		SPTAG(0),		1,			 -1 },
-	{ NULL,		  "spfm",		NULL,		SPTAG(1),		1,			 -1 },
-	{ NULL,		  "keepassxc",	NULL,		SPTAG(2),		0,			 -1 },
+  /* class     instance     title           tags mask  isfloating  isterminal  noswallow  monitor */
+  { "Gimp",    NULL,        NULL,           0,         1,          0,           0,        -1 },
+  { "Firefox", NULL,        NULL,           1 << 8,    0,          0,          -1,        -1 },
+  { TERMCLASS, NULL,        NULL,           0,         0,          1,           0,        -1 },
+  { NULL,      NULL,        "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
+  { NULL,      "spterm",    NULL,           SPTAG(0),  1,          1,           0,        -1 },
+  { NULL,      "spcalc",    NULL,           SPTAG(1),  1,          1,           0,        -1 },
+  /* { TERMCLASS, "spfm",      NULL,           SPTAG(1),  1,          1,           0,        -1 }, */
+  /* { TERMCLASS, "keepassxc", NULL,           SPTAG(2),  0,          1,           0,        -1 }, */
 };
 
 /* layout(s) */
@@ -103,7 +127,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *termcmd[]  = { "ghostty", NULL };
+static const char *termcmd[]  = { TERMINAL, NULL };
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -146,9 +170,9 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	{ MODKEY,            			XK_y,  	   togglescratch,  {.ui = 0 } },
-	{ MODKEY,            			XK_u,	   togglescratch,  {.ui = 1 } },
-	{ MODKEY,            			XK_x,	   togglescratch,  {.ui = 2 } },
+	{ MODKEY,                       XK_y,      togglescratch,  {.ui = 0 } },
+	{ MODKEY,                       XK_u,      togglescratch,  {.ui = 1 } },
+	{ MODKEY,                       XK_x,      togglescratch,  {.ui = 2 } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
