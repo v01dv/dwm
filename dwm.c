@@ -2398,6 +2398,9 @@ view(const Arg *arg)
 {
 	int i;
 	unsigned int tmptag;
+  int di;
+	unsigned int dui;
+	Window win, dummy;
 
 	if ((arg->ui & TAGMASK) == selmon->tagset[selmon->seltags])
 		return;
@@ -2429,6 +2432,11 @@ view(const Arg *arg)
 
 	focus(NULL);
 	arrange(selmon);
+
+  /* Focus window at current pointer location. */
+	XQueryPointer(dpy, root, &dummy, &win, &di, &di, &di, &di, &dui);
+	focus(wintoclient(win));
+	XFlush(dpy);
 }
 
 pid_t

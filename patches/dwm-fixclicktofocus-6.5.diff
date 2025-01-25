@@ -1,0 +1,32 @@
+Focus window at pointer location after tag switch.
+Problem: The windows don't switch focus on what the mouse is pointing at if you
+go from an empty tab to another one. You need to move the mouse outside and back
+the window you have the mouse on currently to be able to get focus on it.
+Details: https://bbs.archlinux.org/viewtopic.php?id=158780
+Fix: https://github.com/vain/dwm-vain/commit/3ef9abc023e4e34da41f586e70a99db15a7ae03d
+diff '--color=auto' -r -u a/dwm.c b/dwm.c
+--- a/dwm.c	2025-01-25 23:34:52.994718265 +0200
++++ b/dwm.c	2025-01-25 23:47:04.595361283 +0200
+@@ -2052,6 +2052,10 @@
+ void
+ view(const Arg *arg)
+ {
++  int di;
++	unsigned int dui;
++	Window win, dummy;
++
+ 	if ((arg->ui & TAGMASK) == selmon->tagset[selmon->seltags])
+ 		return;
+ 	selmon->seltags ^= 1; /* toggle sel tagset */
+@@ -2059,6 +2063,11 @@
+ 		selmon->tagset[selmon->seltags] = arg->ui & TAGMASK;
+ 	focus(NULL);
+ 	arrange(selmon);
++
++  /* Focus window at current pointer location. */
++	XQueryPointer(dpy, root, &dummy, &win, &di, &di, &di, &di, &dui);
++	focus(wintoclient(win));
++	XFlush(dpy);
+ }
+
+ Client *
