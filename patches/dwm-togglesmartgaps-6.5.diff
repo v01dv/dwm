@@ -1,0 +1,39 @@
+Added function to toggle smartgaps and bound it to Super+Shift+apostrophe
+Based on https://github.com/LukeSmithxyz/dwm/commit/20c5780d14274637bc1e08521fa050c37cedf0df
+diff '--color=auto' -r -u a/config.def.h b/config.def.h
+--- a/config.def.h	2025-01-25 22:01:51.434403269 +0200
++++ b/config.def.h	2025-01-25 21:55:08.657210592 +0200
+@@ -108,6 +108,7 @@
+ 	{ MODKEY|Mod4Mask|ShiftMask,    XK_9,      incrovgaps,     {.i = -1 } },
+ 	{ MODKEY|Mod4Mask,              XK_0,      togglegaps,     {0} },
+ 	{ MODKEY|Mod4Mask|ShiftMask,    XK_0,      defaultgaps,    {0} },
++  { MODKEY|ShiftMask,             XK_apostrophe,  togglesmartgaps,	{0} },
+ 	{ MODKEY,                       XK_Tab,    view,           {0} },
+ 	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
+ 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
+Binary files a/.git/index and b/.git/index differ
+diff '--color=auto' -r -u a/vanitygaps.c b/vanitygaps.c
+--- a/vanitygaps.c	2025-01-25 22:52:20.282373499 +0200
++++ b/vanitygaps.c	2025-01-25 21:50:11.767703115 +0200
+@@ -8,6 +8,7 @@
+ static void incrihgaps(const Arg *arg);
+ static void incrivgaps(const Arg *arg);
+ static void togglegaps(const Arg *arg);
++static void togglesmartgaps(const Arg *arg);
+ /* Layouts (delete the ones you do not need) */
+ static void bstack(Monitor *m);
+ static void bstackhoriz(Monitor *m);
+@@ -56,6 +57,13 @@
+ 	arrange(NULL);
+ }
+
++static void
++togglesmartgaps(const Arg *arg)
++{
++	smartgaps = !smartgaps;
++	arrange(NULL);
++}
++
+ void
+ defaultgaps(const Arg *arg)
+ {
