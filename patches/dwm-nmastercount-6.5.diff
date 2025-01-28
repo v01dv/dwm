@@ -1,0 +1,32 @@
+nmastercount prints the number of windows in "master area" and the total number
+of masters beside the symbol of the layout.
+Problem: hard to keep track of how many windows there are in the "master area",
+especially when using the pertag patch.
+Details:
+https://www.reddit.com/r/suckless/comments/l4it1k/dwm_display_number_of_windows_in_master_area_in/?rdt=65325
+https://stackoverflow.com/questions/61101757/x-dwm-help-me-fix-a-bug-in-c-source-code
+https://gist.github.com/bandithijo/9c283085f6db994669802a87e2800318
+diff '--color=auto' -r -u a/dwm.c b/dwm.c
+--- a/dwm.c	2025-01-28 01:36:33.329774813 +0200
++++ b/dwm.c	2025-01-28 02:34:54.939108525 +0200
+@@ -702,6 +702,8 @@
+ 	int boxw = drw->fonts->h / 6 + 2;
+ 	unsigned int i, occ = 0, urg = 0;
+ 	Client *c;
++  char nmbuf[26];
++  int nmw = 0;
+
+ 	if (!m->showbar)
+ 		return;
+@@ -731,7 +733,10 @@
+ 	}
+ 	w = TEXTW(m->ltsymbol);
+ 	drw_setscheme(drw, scheme[SchemeNorm]);
+-	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
++
++  snprintf(nmbuf, sizeof(m->ltsymbol) + sizeof(m->nmaster) + 2 + sizeof(nmaster), "%s %d/%d", m->ltsymbol, m->nmaster, nmaster);
++  nmw = TEXTW(nmbuf);
++  x = drw_text(drw, x, 0, nmw, bh, lrpad / 2, nmbuf, 0);
+
+ 	if ((w = m->ww - tw - x) > bh) {
+ 		if (m->sel) {
