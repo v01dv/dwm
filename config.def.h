@@ -246,24 +246,28 @@ static const Key keys[] = {
   //
   // SYSTEM
   //
-  { MODKEY,                      XK_grave,      spawn,  {.v = (const char*[]){ "dmenuunicode", NULL } } },
-  { MODKEY,                      XK_BackSpace,  spawn,       {.v = (const char*[]){ "sysact", NULL } } },
-  { MODKEY|ShiftMask,            XK_BackSpace,  spawn,       {.v = (const char*[]){ "sysact", NULL } } },
-  // { MODKEY,                      XK_Insert,     spawn,    SHCMD("xdotool type $(grep -v '^#' ~/.local/share/larbs/snippets | dmenu -i -l 50 | cut -d' ' -f1)") },
-  { MODKEY,                      XK_Insert,     spawn,    SHCMD("clipmenu") },
-  // { MODKEY,                     XK_F1,    spawn,    SHCMD("groff -mom /usr/local/share/dwm/larbs.mom -Tpdf | zathura -") },
-  { MODKEY,                     XK_F1,    spawn,    SHCMD("zathura /usr/local/share/dwm/dwm.pdf") },
-  // { MODKEY,                     XK_F2,    spawn,    {.v = (const char*[]){ "tutorialvids", NULL } } },
-  { MODKEY,                     XK_F3,    spawn,    {.v = (const char*[]){ "displayselect", NULL } } },
-  { MODKEY,                     XK_F4,    spawn,    SHCMD(TERMINAL " -e pulsemixer; kill -44 $(pidof dwmblocks)") },
-  // { MODKEY,                     XK_F5,    xrdb,     {.v = NULL } },
-  // { MODKEY,                     XK_F6,    spawn,    {.v = (const char*[]){ "torwrap", NULL } } },
-  // { MODKEY,                     XK_F7,    spawn,    {.v = (const char*[]){ "td-toggle", NULL } } },
-  // { MODKEY,                     XK_F8,    spawn,    {.v = (const char*[]){ "mailsync", NULL } } },
-  { MODKEY,                     XK_F9,    spawn,    {.v = (const char*[]){ "mounter", NULL } } },
-  { MODKEY,                     XK_F10,   spawn,    {.v = (const char*[]){ "unmounter", NULL } } },
-  { MODKEY,                     XK_F11,   spawn,    SHCMD("mpv --untimed --no-cache --no-osc --no-input-default-bindings --profile=low-latency --input-conf=/dev/null --title=webcam $(ls /dev/video[0,2,4,6,8] | tail -n 1)") },
-  // { MODKEY,                     XK_F12,   spawn,    SHCMD("remaps") },
+  { MODKEY,             XK_grave,       spawn,    {.v = (const char*[]){ "dmenuunicode", NULL } } },
+  { MODKEY,             XK_BackSpace,   spawn,    {.v = (const char*[]){ "sysact", NULL } } },
+  { MODKEY|ShiftMask,   XK_BackSpace,   spawn,    {.v = (const char*[]){ "sysact", NULL } } },
+  // { MODKEY,             XK_Insert,     spawn,    SHCMD("xdotool type $(grep -v '^#' ~/.local/share/larbs/snippets | dmenu -i -l 50 | cut -d' ' -f1)") },
+  { MODKEY,             XK_Insert,      spawn,    SHCMD("clipmenu") },
+  // { MODKEY,            XK_F1,    spawn,    SHCMD("groff -mom /usr/local/share/dwm/larbs.mom -Tpdf | zathura -") },
+  { MODKEY,             XK_F1,          spawn,    SHCMD("zathura /usr/local/share/dwm/dwm.pdf") },
+  // { MODKEY,            XK_F2,    spawn,    {.v = (const char*[]){ "tutorialvids", NULL } } },
+  { MODKEY,             XK_F3,          spawn,    {.v = (const char*[]){ "displayselect", NULL } } },
+  { MODKEY,             XK_F4,          spawn,    SHCMD(TERMINAL " -e pulsemixer; kill -44 $(pidof dwmblocks)") },
+  // { MODKEY,            XK_F5,    xrdb,     {.v = NULL } },
+  // { MODKEY,            XK_F6,    spawn,    {.v = (const char*[]){ "torwrap", NULL } } },
+  // { MODKEY,            XK_F7,    spawn,    {.v = (const char*[]){ "td-toggle", NULL } } },
+  // { MODKEY,            XK_F8,    spawn,    {.v = (const char*[]){ "mailsync", NULL } } },
+  { MODKEY,             XK_F9,          spawn,    {.v = (const char*[]){ "mounter", NULL } } },
+  { MODKEY,             XK_F10,         spawn,    {.v = (const char*[]){ "unmounter", NULL } } },
+  { MODKEY,             XK_F11,         spawn,    SHCMD("mpv --untimed --no-cache --no-osc --no-input-default-bindings --profile=low-latency --input-conf=/dev/null --title=webcam $(ls /dev/video[0,2,4,6,8] | tail -n 1)") },
+  { MODKEY,             XK_F12,         spawn,    SHCMD("remaps") },
+  // Switch my language layout with Alt+Shift. "Mod1Mask" is the Alt key and "ShiftMask" is the Shift key.
+  // DWM only detects when Shift was pressed first. To detect the opposite one, repeat the binding for Mod1Mask, XK_Shift_L
+  {ShiftMask,           XK_Alt_L,       spawn,    SHCMD("sb-kbselect; kill -64 $(pidof dwmblocks)")},
+  {Mod1Mask,            XK_Shift_L,     spawn,    SHCMD("sb-kbselect; kill -64 $(pidof dwmblocks)")},
 
 
   //
