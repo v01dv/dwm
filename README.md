@@ -1,0 +1,73 @@
+# My build of dwm
+
+## Installation
+
+```sh
+sudo make clean install
+```
+
+## Usage
+
+I keep a readme in `dwm.pdf` for my whole system, including the binds here.
+Press `super+F1` to view it in dwm (zathura is required for that binding).
+I haven't kept `man dwm`/`dwm.1` updated though.
+
+## Patches and features
+
+Extra stuff added to vanilla dwm (version 6.5) into order of the applied patches:
+
+1. [dwm-vanitygaps-6.2](https://dwm.suckless.org/patches/vanitygaps/dwm-vanitygaps-6.2.diff): gaps allowed across all layouts.
+    - Added layouts: tile, bstack, bstackhoriz, centeredmaster, centeredfloatingmaster, deck, fibonacci (dwindle, spiral), grid, nrowgrid.
+        - That's why no need to additional patching by [dwm-centeredmaster-6.1](https://dwm.suckless.org/patches/centeredmaster/dwm-centeredmaster-6.1.diff)
+    - All bound to keys `super+(shift+)t/y/u/i`.
+2. [dwm-swallow-6.3](https://dwm.suckless.org/patches/swallow/dwm-swallow-6.3.diff): if a program run from a terminal would make it inoperable, it temporarily takes its place to save space.
+3. [dwm-pertag-20200914-61bb8b2](https://dwm.suckless.org/patches/pertag/dwm-pertag-20200914-61bb8b2.diff): this patch keeps selected layout per tag.
+4. [dwm-stacker-6.2](https://dwm.suckless.org/patches/stacker/dwm-stacker-6.2.diff): move windows up the stack manually (`super-K/J`).
+5. [dwm-statusallmons-6.2](https://dwm.suckless.org/patches/statusallmons/dwm-statusallmons-6.2.diff): draws and updates the statusbar on all monitors.
+6. [dwm-sticky-6.4](https://dwm.suckless.org/patches/sticky/dwm-sticky-6.4.diff): press `super+s` to make/unmake a window 'sticky'. A sticky window is visible on all tags.
+7. [dwm-scratchpads-20200414-728d397b](https://dwm.suckless.org/patches/scratchpads/dwm-scratchpads-20200414-728d397b.diff): accessible with `mod+shift+enter`.
+8. [shiftview](https://dwm.suckless.org/patches/nextprev/) but with [Luke Smith fixes](https://github.com/LukeSmithxyz/dwm/blob/master/shiftview.c): Cycle through tags (`super+g/;`).
+9. [dwm-actualfullscreen-20211013-cb3f58a](https://dwm.suckless.org/patches/actualfullscreen/dwm-actualfullscreen-20211013-cb3f58a.diff): true fullscreen (`super+f`) and prevents focus shifting.
+10. [dwm-hide_vacant_tags-6.4](https://dwm.suckless.org/patches/hide_vacant_tags/dwm-hide_vacant_tags-6.4.diff): hides tags with no windows.
+11. [dwm-alwayscenter-20200625-f04cac6](https://dwm.suckless.org/patches/alwayscenter/dwm-alwayscenter-20200625-f04cac6.diff): all floating windows are centered, like the center patch, but without a rule.
+12. [dwm-preserveonrestart-6.3](https://dwm.suckless.org/patches/preserveonrestart/dwm-preserveonrestart-6.3.diff): preserves clients on old tags that allows all clients don't lose it's current tag and not collapse to first tag when dwm is recompiled-restarted.
+13. [dwm-windowmap-20221026](https://dwm.suckless.org/patches/windowmap/): remove moving window [to the left](https://www.reddit.com/r/suckless/comments/190uyxe/dwm_tag_picom_animations/) when changing tags.
+    This allow to correct work of the trigger "hide" in picom animation configuration.
+    Trigger "hide" doesn't work for DWM, because here no [iconic state minimized](https://www.reddit.com/r/suckless/comments/kie83p/minimise_windows_in_dwm/).
+    We achieve a similar effect by sending a window to another tag that is
+    not currently being viewed. This way, the window is still running but
+    is not visible on your current workspace. So window are merely moved in and
+    out of view. The same behavior occurs when changing tags.
+14. [dwm-fixclicktofocus-6.5](https://github.com/v01dv/dwm/blob/meow/patches/dwm-fixclicktofocus-6.5.diff): focus window at pointer location after tag switch.
+15. [dwm-togglesmartgaps-6.5](https://github.com/v01dv/dwm/blob/meow/patches/dwm-togglesmartgaps-6.5.diff)
+16. [dwm-nmastercount-6.5](https://github.com/v01dv/dwm/blob/meow/patches/dwm-nmastercount-6.5.diff) prints the number of windows in "master area" and the
+    total number of masters beside the symbol of the layout.
+17. [dwm-fixborders-6.2](https://dwm.suckless.org/patches/alpha/dwm-fixborders-6.2.diff): make windows' borders opaque
+18. [dwm-autostart-dwmblocks-6.5](https://github.com/v01dv/dwm/blob/meow/patches/dwm-autostart-dwmblocks-6.5.diff): run dwmblocks when DWM starts
+
+## Decided not use for now
+1. [dwm-statuscmd-20210405-67d76bd](https://dwm.suckless.org/patches/statuscmd/dwm-statuscmd-20210405-67d76bd.diff): with my build of [dwmblocks](https://github.com/v01dv/dwmblocks).
+2. [dwm-xresources-20210827-138b405](https://dwm.suckless.org/patches/xresources/dwm-xresources-20210827-138b405.diff): reads colors/variables.
+
+## TODO
+
+- [ ] Update and replace dwm.pdf with my document (create dwm.md and then convert it to pdf).
+- [ ] [autostart](https://dwm.suckless.org/patches/autostar). Put autostart stuff in autostart script.
+- [ ] [three-column](https://dwm.suckless.org/patches/three-column/): patch adds Three Column Layout with a wide master panel centered on the screen.
+- [ ] [tatami](https://dwm.suckless.org/patches/tatami/): this patch adds a new layout, tatami, that arranges all windows like tatami tiles.
+- [ ] [attachabove](https://dwm.suckless.org/patches/attachabove/): make new clients attach above the selected client, instead of always becoming the new master.
+- [ ] [notitle](https://dwm.suckless.org/patches/notitle/): doesn't show the title.
+- [ ] [decoration hints](https://dwm.suckless.org/patches/decoration_hints/): make dwm respect MOTIF_WM_HINTS property, and not draw borders around windows requesting for it.
+- [ ] [ewmhtags](https://dwm.suckless.org/patches/ewmhtags/): adds EWMH support for NET_NUMBER_OF_DESKTOPS, NET_CURRENT_DESKTOP, NET_DESKTOP_NAMES, and NET_DESKTOP_VIEWPORT, which allows for compatibility with other bars and programs that request workspace information.
+    - https://en.wikipedia.org/wiki/Extended_Window_Manager_Hints
+    - https://specifications.freedesktop.org/wm-spec/latest/
+    - https://specifications.freedesktop.org/wm-spec/1.5/ar01s03.html
+    - https://www.reddit.com/r/suckless/comments/k8lej4/dwm_i_am_looking_for_patches_to_make_dwm_more/
+- [ ]   [focusonnetactive](https://dwm.suckless.org/patches/focusonnetactive/)
+        This patch allows to use `rofi -show window` to get a select able list
+        of open windows and switch to the window, and activate the tag.
+        Found this at [[DWM] Best Way to Find Out What Apps Left Open on the Tags : r/suckless](https://www.reddit.com/r/suckless/comments/198rxnk/dwm_best_way_to_find_out_what_apps_left_open_on/)
+
+## Credits
+
+- [LukeSmithxyz](https://github.com/LukeSmithxyz/dwm)
