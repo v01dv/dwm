@@ -2168,6 +2168,16 @@ updateclientlist(void)
 				(unsigned char *) &(c->win), 1);
 }
 
+#ifdef XINERAMA
+// Custom comparator: sort monitors by x_org to match physical layout left-to-right
+static int
+compare_xinerama_x(const void *a, const void *b) {
+	const XineramaScreenInfo *sa = (const XineramaScreenInfo *)a;
+	const XineramaScreenInfo *sb = (const XineramaScreenInfo *)b;
+	return sa->x_org - sb->x_org;
+}
+#endif /* XINERAMA */
+
 int
 updategeom(void)
 {
@@ -2184,6 +2194,8 @@ updategeom(void)
 		for (n = 0, m = mons; m; m = m->next, n++);
 		/* only consider unique geometries as separate screens */
 		unique = ecalloc(nn, sizeof(XineramaScreenInfo));
+		// Sort monitors by x_org so dwm handles screens in left-to-right order
+		qsort(info, nn, sizeof(XineramaScreenInfo), compare_xinerama_x);
 		for (i = 0, j = 0; i < nn; i++)
 			if (isuniquegeom(unique, j, &info[i]))
 				memcpy(&unique[j++], &info[i], sizeof(XineramaScreenInfo));
